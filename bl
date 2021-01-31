@@ -1,0 +1,19 @@
+#!/bin/sh
+bl_dev=/sys/class/backlight/intel_backlight
+current_brightness=$(cat $bl_dev/brightness)
+step=$(( $current_brightness / 10 + 1 ))
+
+#if [ $current_brightness -lt 100]; then
+#	step=1
+#elif [ $current_brightness -lt 1000]; then
+#	step=10
+#elif [ $current_brightness -lt 10000]; then
+#	step=100
+#elif [ $current_brightness -lt 100000]; then
+#	step=1000
+#fi
+
+case $1 in
+	-) echo $(($current_brightness - $step)) >$bl_dev/brightness;;
+	+) echo $(($current_brightness + $step)) >$bl_dev/brightness;;
+esac
